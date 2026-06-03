@@ -1,35 +1,8 @@
 import { IMAGES } from '../constants/images'
 import FlavorCarousel from './FlavorCarousel'
+import yummyLeftImage from '../assets/yummy_left.jpg'
 
 const FLAVORS = [
-  {
-    name: 'Coconut',
-    icon: 'water_drop',
-    iconBg: 'bg-tertiary-fixed',
-    iconColor: 'text-tertiary',
-    dotColor: 'bg-tertiary',
-  },
-  {
-    name: 'Mango',
-    icon: 'nutrition',
-    iconBg: 'bg-secondary-fixed',
-    iconColor: 'text-secondary',
-    dotColor: 'bg-secondary',
-  },
-  {
-    name: 'Strawberry',
-    icon: 'nutrition',
-    iconBg: 'bg-primary-fixed',
-    iconColor: 'text-primary',
-    dotColor: 'bg-primary',
-  },
-  {
-    name: 'Vanilla',
-    icon: 'icecream',
-    iconBg: 'bg-surface-container-high',
-    iconColor: 'text-on-surface-variant',
-    dotColor: 'bg-on-surface-variant',
-  },
   {
     name: 'Original Frozen Yoghurt',
     subtitle: '',
@@ -38,33 +11,10 @@ const FLAVORS = [
     iconColor: 'text-secondary',
     dotColor: 'bg-secondary',
     featured: true,
-  },
-  {
-    name: 'Original',
-    subtitle: 'Classic Signature',
-    icon: 'star',
-    iconBg: 'bg-secondary-fixed',
-    iconColor: 'text-secondary',
-    dotColor: 'bg-secondary',
-  },
-  {
-    name: 'Chocolate',
-    icon: 'cookie',
-    iconBg: 'bg-tertiary-fixed',
-    iconColor: 'text-tertiary',
-    dotColor: 'bg-tertiary',
-  },
-  {
-    name: 'Acai',
-    icon: 'eco',
-    iconBg: 'bg-primary-fixed',
-    iconColor: 'text-primary',
-    dotColor: 'bg-primary',
-  },
+  }
 ]
 
 const featuredFlavor = FLAVORS.find((f) => f.featured)
-const otherFlavors = FLAVORS.filter((f) => !f.featured)
 
 export default function SeasonalRotation() {
   return (
@@ -86,7 +36,7 @@ export default function SeasonalRotation() {
           </p>
         </div>
 
-        <article className="group relative overflow-hidden rounded-[32px] bg-surface-container yogurt-shadow md:col-span-7">
+        <article className="group relative overflow-hidden rounded-[32px] bg-surface-container yogurt-shadow md:col-span-6">
           <img
             alt={`YohGut ${featuredFlavor.name} frozen yogurt`}
             className="h-full min-h-[400px] w-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -94,6 +44,17 @@ export default function SeasonalRotation() {
             loading="lazy"
             decoding="async"
             referrerPolicy="no-referrer"
+          />
+          <img
+            src={yummyLeftImage}
+            alt="Yummy"
+            className="absolute left-[95%] top-[25%] w-32 -translate-x-1/2 -translate-y-1/2 animate-wave"
+            loading="lazy"
+            decoding="async"
+            style={{
+              animation: 'wave 2s ease-in-out infinite',
+              transformOrigin: 'center bottom',
+            }}
           />
           <div className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/60 via-transparent to-transparent p-8">
             <div className="glass-pill mb-3 w-fit rounded-full px-4 py-2">
@@ -117,45 +78,71 @@ export default function SeasonalRotation() {
           </div>
         </article>
 
-        <article className="flex flex-col overflow-hidden rounded-[32px] bg-surface-container yogurt-shadow md:col-span-5">
-          <div className="bg-secondary-fixed px-8 py-6">
-            <h3 className="text-headline-lg text-on-secondary-fixed">Our Flavors</h3>
-            <p className="mt-1 text-body-sm text-on-secondary-fixed/80">
-              Pick your base, then build at the toppings bar.
-            </p>
+        <article className="flex flex-col justify-center gap-6 overflow-hidden rounded-[32px] bg-gradient-to-br from-primary-fixed via-secondary-fixed to-tertiary-fixed p-8 yogurt-shadow md:col-span-6 md:p-10">
+          <div className="flex items-center gap-3">
+            <span
+              className="material-symbols-outlined text-5xl text-primary"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              favorite
+            </span>
+            <h3 className="text-headline-lg text-on-primary-fixed">
+              Why YohGut?
+            </h3>
           </div>
-          <ul className="flex flex-1 flex-col gap-3 bg-surface-container-highest p-5">
-            {otherFlavors.map(
-              ({ name, subtitle, icon, iconBg, iconColor, dotColor }) => (
-                <li
-                  key={name}
-                  className="group/item flex items-center gap-4 rounded-2xl border border-surface-variant/50 bg-surface-container-low px-4 py-4 transition-all duration-200 hover:border-primary/20 hover:bg-surface-container hover:shadow-sm"
-                >
-                  <div
-                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ${iconBg} shadow-sm transition-transform duration-200 group-hover/item:scale-105`}
-                  >
-                    <span
-                      className={`material-symbols-outlined text-2xl ${iconColor}`}
-                      style={{ fontVariationSettings: "'FILL' 1" }}
-                    >
-                      {icon}
-                    </span>
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <span className="text-body-md font-semibold text-on-surface">
-                      {name}
-                    </span>
-                    {subtitle ? (
-                      <p className="mt-0.5 text-body-sm text-on-surface-variant">
-                        {subtitle}
-                      </p>
-                    ) : null}
-                  </div>
-                  <div className={`h-2 w-2 shrink-0 rounded-full ${dotColor} shadow-sm`} />
-                </li>
-              ),
-            )}
-          </ul>
+
+          <div className="space-y-5">
+            <div className="group/card flex items-start gap-4 rounded-2xl bg-white/40 p-5 backdrop-blur-sm transition-all duration-300 hover:bg-white/60 hover:shadow-lg">
+              <span
+                className="material-symbols-outlined mt-1 text-3xl text-secondary"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                spa
+              </span>
+              <div>
+                <h4 className="mb-1 font-semibold text-on-primary-fixed">
+                  Live Probiotics in Every Bite
+                </h4>
+                <p className="text-body-sm text-on-primary-fixed/80">
+                  Billions of friendly cultures for your gut health
+                </p>
+              </div>
+            </div>
+
+            <div className="group/card flex items-start gap-4 rounded-2xl bg-white/40 p-5 backdrop-blur-sm transition-all duration-300 hover:bg-white/60 hover:shadow-lg">
+              <span
+                className="material-symbols-outlined mt-1 text-3xl text-tertiary"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                energy_savings_leaf
+              </span>
+              <div>
+                <h4 className="mb-1 font-semibold text-on-primary-fixed">
+                  Farm-Fresh Ingredients
+                </h4>
+                <p className="text-body-sm text-on-primary-fixed/80">
+                  Locally sourced, made fresh daily with real fruit
+                </p>
+              </div>
+            </div>
+
+            <div className="group/card flex items-start gap-4 rounded-2xl bg-white/40 p-5 backdrop-blur-sm transition-all duration-300 hover:bg-white/60 hover:shadow-lg">
+              <span
+                className="material-symbols-outlined mt-1 text-3xl text-primary"
+                style={{ fontVariationSettings: "'FILL' 1" }}
+              >
+                ecg_heart
+              </span>
+              <div>
+                <h4 className="mb-1 font-semibold text-on-primary-fixed">
+                  Guilt-Free Indulgence
+                </h4>
+                <p className="text-body-sm text-on-primary-fixed/80">
+                  Lower in calories, higher in happiness
+                </p>
+              </div>
+            </div>
+          </div>
         </article>
       </section>
 
