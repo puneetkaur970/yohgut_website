@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react'
 import yohgutLogo from '../assets/yohgut_logo.jpeg'
 
 const navLinks = [
-  { label: 'Home', href: '#menu', page: 'menu' },
+  { label: 'Home', href: '#home', page: 'home' },
   { label: 'Story', href: '#story', page: 'story' },
+  { label: 'Toppings', href: '#toppings', page: 'toppings' },
   { label: 'Contact', href: '#contact', page: 'contact' },
 ]
 
-export default function Header({ activePage = 'menu' }) {
+export default function Header({ activePage = 'home' }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [menuClosing, setMenuClosing] = useState(false)
   const menuVisible = mobileMenuOpen || menuClosing
@@ -36,7 +37,7 @@ export default function Header({ activePage = 'menu' }) {
     <>
       <header className="sticky top-0 z-50 w-full bg-surface/80 shadow-sm backdrop-blur-md">
         <div className="relative mx-auto flex h-20 max-w-[1200px] items-center justify-between px-4 md:px-16">
-          <a href="#menu" className="flex items-center gap-3">
+          <a href="#home" className="flex items-center gap-3">
             <img
               src={yohgutLogo}
               alt=""

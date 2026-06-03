@@ -4,7 +4,9 @@ export function getPageFromHash() {
   const hash = window.location.hash.slice(1)
   if (hash === 'story') return 'story'
   if (hash === 'contact') return 'contact'
-  return 'menu'
+  if (hash === 'toppings') return 'toppings'
+  if (hash === 'home') return 'home'
+  return 'home'
 }
 
 export default function usePage() {
