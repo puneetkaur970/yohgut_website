@@ -28,7 +28,7 @@ export default function HomePage() {
         
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10 rounded-lg">
           <h1 className="text-white text-5xl md:text-7xl text-center mb-6 px-4 drop-shadow-2xl" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 700 }}>
-            Healthy Gut friendly frozen yohgurt
+            Gut friendly frozen yogurt
           </h1>
           <button
             onClick={scrollToFlavors}

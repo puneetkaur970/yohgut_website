@@ -1,4 +1,27 @@
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
+
+// Emoji mapping for toppings
+const toppingEmojis = {
+  'Strawberries': '🍓',
+  'Blueberries': '🫐',
+  'Bananas': '🍌',
+  'Kiwi': '🥝',
+  'Watermelon': '🍉',
+  'Caramelised Banana': '🍌✨',
+  'Rockmelon': '🍈',
+  'Blackberries': '🫐',
+  'Pineapple': '🍍',
+  'Granola': '🌾',
+  'Nuts': '🥜',
+  'Biscoff': '🍪',
+  'Cheerios': '⭕',
+  'Jelly Belly': '🍬',
+  'Chocolate chips': '🍫',
+  'Chocolate wafers': '🍫',
+  'Mini oreos': '🍪',
+  "M&M's": '🍬',
+}
 
 const toppingCategories = [
   {
@@ -50,13 +73,64 @@ const toppingCategories = [
 
 export default function ToppingsPage() {
   const [isVisible, setIsVisible] = useState(false)
+  const [fallingToppings, setFallingToppings] = useState([])
+
+  // Collect all topping items
+  const allToppings = toppingCategories.flatMap(category => category.items)
 
   useEffect(() => {
     setIsVisible(true)
+    
+    // Generate falling toppings
+    const toppings = Array.from({ length: 35 }, (_, i) => {
+      const toppingName = allToppings[Math.floor(Math.random() * allToppings.length)]
+      return {
+        id: Date.now() + i,
+        emoji: toppingEmojis[toppingName] || '🍨',
+        name: toppingName,
+        left: Math.random() * 100,
+        delay: Math.random() * 600,
+        duration: 2500 + Math.random() * 2000,
+        rotation: (Math.random() - 0.5) * 720,
+        swing: (Math.random() - 0.5) * 150,
+        size: 25 + Math.random() * 30,
+      }
+    })
+    setFallingToppings(toppings)
+    
+    // Cleanup after animation completes
+    setTimeout(() => setFallingToppings([]), 5000)
   }, [])
 
+  // Topping shower portal
+  const toppingPortal = fallingToppings.length > 0 && createPortal(
+    <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
+      {fallingToppings.map((topping) => (
+        <div
+          key={topping.id}
+          className="absolute animate-topping-fall"
+          style={{
+            left: `${topping.left}%`,
+            top: '-10%',
+            fontSize: `${topping.size}px`,
+            animationDelay: `${topping.delay}ms`,
+            animationDuration: `${topping.duration}ms`,
+            '--swing-amount': `${topping.swing}px`,
+            '--rotation-amount': `${topping.rotation}deg`,
+            filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))',
+          }}
+        >
+          {topping.emoji}
+        </div>
+      ))}
+    </div>,
+    document.body
+  )
+
   return (
-    <main className="relative overflow-hidden">
+    <>
+      {toppingPortal}
+      <main className="relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -right-32 -top-32 h-96 w-96 animate-blob rounded-full bg-primary/10 blur-3xl" />
@@ -197,6 +271,7 @@ export default function ToppingsPage() {
           </a>
         </div>
       </div>
-    </main>
+      </main>
+    </>
   )
 }

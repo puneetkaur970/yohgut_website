@@ -121,7 +121,7 @@ function SketchSection() {
           title="The Reality"
           primary
         >
-          YohGut brought that dream to life in Yarraville—a bright, welcoming corner where
+          YohGut brought that dream to life in Sunbury—a bright, welcoming corner where
           every swirl celebrates the balance of taste and health we set out to create.
         </StoryCard>
       </div>
@@ -193,12 +193,12 @@ function CommunitySection() {
     <div className="mx-auto max-w-4xl text-center">
       {/* <div className="mb-8 inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-label-bold text-primary shadow-sm">
         <span className="material-symbols-outlined text-[16px]">location_on</span>
-        Yarraville&apos;s Living Room
+        Sunbury&apos;s Living Room
       </div> */}
       <h2 className="mb-6 text-headline-xl text-on-surface">Our Roots Run Deep</h2>
       <p className="mb-12 text-body-md leading-relaxed text-on-surface-variant">
-        We did not just choose Yarraville—we grew up with it. Our shop was designed as an
-        intimate extension of your own home: a village lounge where neighbours become friends
+        We did not just choose Sunbury—we grew up with it. Our shop was designed as an
+        intimate extension of your own home, a village lounge where neighbours become friends
         and every visit feels like a warm embrace. Whether it is a quiet morning treat or a
         celebratory evening swirl, we are honoured to be part of your daily rhythm.
       </p>
@@ -212,9 +212,9 @@ function CommunityAcknowledgement() {
     <div className="border-t border-outline-variant/30 pt-12">
       <span className="material-symbols-outlined mb-4 text-tertiary/60">park</span>
       <p className="mx-auto max-w-2xl text-body-sm italic text-on-surface-variant">
-        We acknowledge the Wurundjeri Woi-wurrung and Bunurong peoples as the Traditional
-        Custodians of this land. We pay our respects to their Elders and celebrate their
-        enduring connection to the country we call home.
+        Every ingredient we source, every cup we serve, and every smile we share is a reflection
+        of our commitment to this community. We believe in sustainable practices, supporting
+        local farmers, and creating a space where everyone feels at home.
       </p>
     </div>
   )
@@ -232,7 +232,7 @@ function StoryCta() {
       />
       <h2 className="relative z-10 mb-6 text-headline-xl">Be Part of the Story</h2>
       <p className="relative z-10 mx-auto mb-10 max-w-xl text-body-md text-on-primary-container">
-        Come visit our little corner of Yarraville and taste the dream that started with a
+        Come visit our little corner of Sunbury and taste the dream that started with a
         passion for food and a belief that healthy can be delicious.
       </p>
       <div className="relative z-10 flex flex-col justify-center gap-4 md:flex-row">
