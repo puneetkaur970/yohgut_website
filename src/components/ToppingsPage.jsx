@@ -155,7 +155,7 @@ export default function ToppingsPage() {
           </div>
           
           <h1 className="mb-4 text-display-lg font-bold text-on-background">
-            Scratch Toppings Bar
+            Toppings Bar
           </h1>
           
           <p className="mx-auto max-w-2xl text-headline-sm text-on-surface-variant">

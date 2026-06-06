@@ -1,6 +1,7 @@
 import Hero from './Hero'
 import Promotions from './Promotions'
 import SeasonalRotation from './SeasonalRotation'
+import YogurtGame from './YogurtGame'
 import frozenYohgutVideo from '../assets/Frozen_yohgut_in_cup_202606032218.mp4'
 
 export default function HomePage() {
@@ -41,6 +42,8 @@ export default function HomePage() {
       <Hero />
       <SeasonalRotation />
       
+      <YogurtGame />
+      
       <section className="my-16 flex flex-col items-center justify-center rounded-[48px] bg-gradient-to-br from-primary/10 via-secondary/10 to-tertiary/10 px-8 py-16 text-center yogurt-shadow md:px-16">
         <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 backdrop-blur-sm">
           <span
@@ -51,7 +54,7 @@ export default function HomePage() {
           </span>
         </div>
         <h3 className="mb-4 text-headline-lg text-on-background">
-          Scratch Toppings Bar
+          Toppings Bar
         </h3>
         <p className="mb-8 max-w-2xl text-body-lg text-on-surface-variant">
           Elevate your swirl with our hand-curated selection of premium toppings,

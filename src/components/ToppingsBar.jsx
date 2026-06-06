@@ -46,7 +46,7 @@ export default function ToppingsBar() {
       <div className="mb-12 flex flex-col items-end justify-between gap-6 md:flex-row">
         <div className="max-w-xl">
           <h2 className="mb-4 text-headline-lg text-on-background">
-            Scratch Toppings Bar
+            Toppings Bar
           </h2>
           <p className="text-body-md text-on-surface-variant">
             Elevate your swirl with our hand-curated selection of premium toppings,
