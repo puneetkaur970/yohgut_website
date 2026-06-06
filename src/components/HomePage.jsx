@@ -14,9 +14,9 @@ export default function HomePage() {
 
   return (
     <main id="home" className="mx-auto max-w-[1200px] px-4 pb-12 md:px-16 md:pb-24">
-      <div className="relative">
+      <div className="relative -mx-4 md:mx-0">
         <video 
-          className="w-full rounded-lg shadow-lg"
+          className="w-full md:rounded-lg shadow-lg"
           autoPlay 
           loop 
           muted 
@@ -26,7 +26,7 @@ export default function HomePage() {
           Your browser does not support the video tag.
         </video>
         
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10 rounded-lg">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/5 md:rounded-lg">
           <h1 className="text-white text-5xl md:text-7xl text-center mb-6 px-4 drop-shadow-2xl" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 700 }}>
             Gut friendly frozen yogurt
           </h1>
