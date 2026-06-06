@@ -2,6 +2,7 @@ import HomePage from './HomePage'
 import StoryPage from './StoryPage'
 import ContactPage from './ContactPage'
 import ToppingsPage from './ToppingsPage'
+import CareersPage from './CareersPage'
 
 export default function PageContent({ page }) {
   switch (page) {
@@ -11,6 +12,8 @@ export default function PageContent({ page }) {
       return <ContactPage />
     case 'toppings':
       return <ToppingsPage />
+    case 'careers':
+      return <CareersPage />
     default:
       return <HomePage />
   }

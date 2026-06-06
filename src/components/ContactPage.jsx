@@ -1,5 +1,5 @@
 import { CONTACT } from '../constants/contact'
-import { STORY_IMAGES } from '../constants/images'
+import contactImage from '../assets/contact.png'
 
 const MAP_EMBED_URL =
   'https://maps.google.com/maps?q=58+Oshanassy+St,+Sunbury+VIC+3429,+Australia&z=15&output=embed'
@@ -72,29 +72,27 @@ function ContactCard({ icon, title, iconClass, content, href, linkLabel, externa
 
 function ContactHero() {
   return (
-    <section className="relative flex min-h-[60vh] items-center overflow-hidden px-4 py-16 md:px-16">
+    <section className="relative flex min-h-[70vh] items-end overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 z-10 bg-gradient-to-r from-surface via-surface/90 to-surface/70" />
         <img
-          src={STORY_IMAGES.shopReality}
-          alt=""
-          aria-hidden="true"
-          className="h-full w-full object-cover object-center opacity-50 md:opacity-70"
+          src={contactImage}
+          alt="YohGut team member ready to help"
+          className="h-full w-full object-cover object-center"
         />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
       </div>
-      <div className="relative z-20 mx-auto max-w-2xl text-center md:text-left">
-        <span className="mb-6 block text-label-bold uppercase tracking-[0.2em] text-primary">
-          Contact Us
-        </span>
-        <h1 className="mb-6 text-headline-xl text-on-surface md:text-[56px] md:leading-[1.1]">
-          We&apos;d Love to <br />
-          <span className="text-gradient-soft">Hear From You</span>
-        </h1>
-        <p className="text-body-md leading-relaxed text-on-surface-variant">
-          Whether you have a question about our flavours, want to plan a visit, or simply
-          want to say hello—reach out anytime. We&apos;re always happy to swirl up something
-          special for you.
-        </p>
+      <div className="relative z-20 mx-auto w-full max-w-[1200px] px-4 pb-12 md:px-16 md:pb-16">
+        <div className="max-w-2xl">
+          <h1 className="mb-4 text-4xl font-bold text-white drop-shadow-lg md:text-5xl">
+            We&apos;d Love to Hear From You
+          </h1>
+          <p className="mb-6 max-w-lg text-lg font-medium text-white drop-shadow-md">
+            Whether you have a question about our flavours, want to plan a visit, or simply
+            want to say hello—reach out anytime. We&apos;re always happy to swirl up something
+            special for you.
+          </p>
+        </div>
       </div>
     </section>
   )
@@ -188,7 +186,7 @@ export default function ContactPage() {
     <main id="contact" className="overflow-x-hidden pb-12 md:pb-0">
       <ContactHero />
 
-      <section className="bg-surface-container-low px-4 py-24 md:px-16">
+      <section id="contact-cards" className="bg-surface-container-low px-4 py-24 md:px-16">
         <div className="mx-auto max-w-[1200px]">
           <ContactSectionHeader />
           <div className="grid gap-8 md:grid-cols-3">

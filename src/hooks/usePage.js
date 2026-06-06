@@ -5,6 +5,7 @@ export function getPageFromHash() {
   if (hash === 'story') return 'story'
   if (hash === 'contact') return 'contact'
   if (hash === 'toppings') return 'toppings'
+  if (hash === 'careers') return 'careers'
   if (hash === 'home') return 'home'
   return 'home'
 }

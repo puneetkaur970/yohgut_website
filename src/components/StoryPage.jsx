@@ -1,4 +1,5 @@
 import { STORY_IMAGES } from '../constants/images'
+import storyImage from '../assets/story.png'
 
 const values = [
   {
@@ -66,29 +67,36 @@ function StoryCardHeading({ icon, title, primary }) {
   )
 }
 
-function HeroCopy() {
+function StoryHero() {
   return (
-    <div className="relative z-20 max-w-2xl">
-      <span className="mb-6 block text-label-bold uppercase tracking-[0.2em] text-primary">
-        Our Origin Story
-      </span>
-      <h1 className="mb-8 text-headline-xl text-on-surface md:text-[64px] md:leading-[1.1]">
-        A Passion for Food, <br />
-        <span className="text-gradient-soft">Swirled into Reality</span>
-      </h1>
-      <p className="mb-10 text-body-md leading-relaxed text-on-surface-variant">
-        I always had a passion for doing something of my own in the food industry—a dream of
-        building a place where flavour and wellbeing could share the same cup. That vision
-        became YohGut: a shop dedicated to tasty, healthy frozen yoghurt, crafted with care
-        and served with the warmth of a neighbourhood gathering spot.
-      </p>
-      <div className="flex items-center gap-4">
-        <div className="h-px w-12 bg-outline" />
-        <span className="font-medium italic text-on-surface-variant">
-          Est. Sunbury, 2026
-        </span>
+    <section className="relative flex min-h-[70vh] items-end overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img
+          src={storyImage}
+          alt="A child dreaming about YohGut's future"
+          className="h-full w-full object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
       </div>
-    </div>
+      <div className="relative z-20 mx-auto w-full max-w-[1200px] px-4 pb-12 md:px-16 md:pb-16">
+        <div className="max-w-2xl">
+          <h1 className="mb-4 text-4xl font-bold text-white drop-shadow-lg md:text-5xl">
+            A Passion for Food, Swirled into Reality
+          </h1>
+          <p className="mb-6 max-w-lg text-lg font-medium text-white drop-shadow-md">
+            I always had a passion for doing something of my own in the food industry—a dream of
+            building a place where flavour and wellbeing could share the same cup.
+          </p>
+          <div className="flex items-center gap-4">
+            <div className="h-px w-12 bg-white/60" />
+            <span className="font-medium italic text-white/90 drop-shadow-md">
+              Est. Sunbury, 2026
+            </span>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -256,17 +264,7 @@ function StoryCta() {
 export default function StoryPage() {
   return (
     <main id="story" className="overflow-x-hidden pb-12 md:pb-0">
-      <section className="relative flex min-h-[85vh] items-center overflow-hidden px-4 py-16 md:px-16">
-        <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 z-10 bg-gradient-to-r from-surface via-surface/80 to-transparent" />
-          <img
-            src={STORY_IMAGES.heroDream}
-            alt="The dream behind YohGut"
-            className="h-full w-full object-cover object-right opacity-60 md:opacity-100"
-          />
-        </div>
-        <HeroCopy />
-      </section>
+      <StoryHero />
 
       <section className="bg-surface-container-low px-4 py-24 md:px-16">
         <SketchSection />
