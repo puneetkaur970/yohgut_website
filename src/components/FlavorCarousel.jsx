@@ -1,5 +1,23 @@
-import { useCallback, useRef, useState } from 'react'
-import { IMAGES } from '../constants/images'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+
+import chocolateImg from '../assets/chocolate.png'
+import acaiImg from '../assets/acai.png'
+import coconutImg from '../assets/coconut.png'
+import mangoImg from '../assets/mango.png'
+import strawberryImg from '../assets/strawberry.png'
+import vanillaImg from '../assets/vanilla.png'
+import classicImg from '../assets/classic.png'
+
+const FLAVOR_EMOJIS = {
+  'Original Frozen Yoghurt': ['🍦', '✨', '⭐', '🌟'],
+  'Mango': ['🥭', '🌴', '☀️', '🧡'],
+  'Strawberry': ['🍓', '🌸', '💕', '❤️'],
+  'Vanilla': ['🍦', '🌼', '⭐', '✨'],
+  'Coconut': ['🥥', '🌴', '🏝️', '🤍'],
+  'Chocolate': ['🍫', '🤎', '🍩', '☕'],
+  'Acai': ['🫐', '💜', '🍇', '✨'],
+}
 
 const FLAVOR_SLIDES = [
   {
@@ -7,49 +25,49 @@ const FLAVOR_SLIDES = [
     badge: 'Classic Signature',
     description:
       'Our house classic—creamy, balanced, and the foundation every swirl starts from.',
-    image: IMAGES.wildBerrySwirl,
+    image: classicImg,
   },
   {
     name: 'Mango',
     badge: 'Tropical Favorite',
     description:
       'Sun-ripe mango folded into tart yogurt for a bright, golden spoonful every time.',
-    image: IMAGES.flavorMango,
+    image: mangoImg,
   },
   {
     name: 'Strawberry',
     badge: 'Berry Fresh',
     description:
       'Sweet strawberries blended smooth—light, fruity, and perfect with crunchy toppings.',
-    image: IMAGES.flavorStrawberry,
+    image: strawberryImg,
   },
   {
     name: 'Vanilla',
     badge: 'Timeless Classic',
     description:
       'Pure Madagascar vanilla swirled into creamy yogurt—silky, subtle, and perfect with any topping.',
-    image: IMAGES.flavorVanilla,
+    image: vanillaImg,
   },
   {
     name: 'Coconut',
     badge: 'Island Cream',
     description:
       'Toasted coconut notes meet cool yogurt for a silky, vacation-worthy scoop.',
-    image: IMAGES.flavorCoconut,
+    image: coconutImg,
   },
   {
     name: 'Chocolate',
     badge: 'Rich Indulgence',
     description:
       'Deep cocoa richness balanced with our signature tang—decadent without the heaviness.',
-    image: IMAGES.flavorChocolate,
+    image: chocolateImg,
   },
   {
     name: 'Acai',
     badge: 'Superfruit Boost',
     description:
       'Antioxidant-packed acai with a naturally vibrant finish—bold color, clean finish.',
-    image: IMAGES.flavorAcai,
+    image: acaiImg,
   },
 ]
 
@@ -71,12 +89,53 @@ function getVisibleSlides(activeIndex) {
 
 export default function FlavorCarousel() {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [burstParticles, setBurstParticles] = useState([])
+  const [pendingBurst, setPendingBurst] = useState(null)
   const pointerStartX = useRef(0)
   const isDragging = useRef(false)
+  const centerSlideRef = useRef(null)
+
+  const triggerBurstEffect = useCallback((flavorName, centerX, centerY) => {
+    const emojis = FLAVOR_EMOJIS[flavorName] || ['🍦', '✨']
+    const particles = Array.from({ length: 24 }, (_, i) => {
+      const angle = (i / 24) * Math.PI * 2 + (Math.random() - 0.5) * 0.3
+      const distance = 150 + Math.random() * 200
+      const endX = Math.cos(angle) * distance
+      const endY = Math.sin(angle) * distance
+      return {
+        id: Date.now() + i,
+        emoji: emojis[Math.floor(Math.random() * emojis.length)],
+        startX: centerX,
+        startY: centerY,
+        endX,
+        endY,
+        delay: Math.random() * 150,
+        duration: 1800 + Math.random() * 800,
+        rotation: (Math.random() - 0.5) * 360,
+        size: 20 + Math.random() * 20,
+      }
+    })
+    setBurstParticles(particles)
+    setTimeout(() => setBurstParticles([]), 3000)
+  }, [])
+
+  useEffect(() => {
+    if (pendingBurst && centerSlideRef.current) {
+      const rect = centerSlideRef.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+      triggerBurstEffect(pendingBurst, centerX, centerY)
+      setPendingBurst(null)
+    }
+  }, [pendingBurst, activeIndex, triggerBurstEffect])
 
   const goTo = useCallback((index) => {
-    setActiveIndex(((index % SLIDE_COUNT) + SLIDE_COUNT) % SLIDE_COUNT)
-  }, [])
+    const newIndex = ((index % SLIDE_COUNT) + SLIDE_COUNT) % SLIDE_COUNT
+    if (newIndex === activeIndex) return
+    const flavorName = FLAVOR_SLIDES[newIndex].name
+    setActiveIndex(newIndex)
+    setPendingBurst(flavorName)
+  }, [activeIndex])
 
   const goNext = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo])
   const goPrev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo])
@@ -117,8 +176,35 @@ export default function FlavorCarousel() {
   const activeSlide = FLAVOR_SLIDES[activeIndex]
   const visibleSlides = getVisibleSlides(activeIndex)
 
+  const burstPortal = burstParticles.length > 0 && createPortal(
+    <div className="pointer-events-none fixed inset-0 z-[9999]">
+      {burstParticles.map((particle) => (
+        <div
+          key={particle.id}
+          className="absolute"
+          style={{
+            left: particle.startX,
+            top: particle.startY,
+            fontSize: `${particle.size}px`,
+            animation: `flavor-burst ${particle.duration}ms cubic-bezier(0.25, 0.46, 0.45, 0.94) ${particle.delay}ms forwards`,
+            '--end-x': `${particle.endX}px`,
+            '--end-y': `${particle.endY}px`,
+            '--rotation': `${particle.rotation}deg`,
+            filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.2))',
+            transform: 'translate(-50%, -50%)',
+          }}
+        >
+          {particle.emoji}
+        </div>
+      ))}
+    </div>,
+    document.body
+  )
+
   return (
-    <section aria-labelledby="flavor-carousel-heading">
+    <>
+      {burstPortal}
+      <section aria-labelledby="flavor-carousel-heading">
       <div className="mb-6 md:mb-8">
         <h2
           id="flavor-carousel-heading"
@@ -171,6 +257,7 @@ export default function FlavorCarousel() {
             return (
               <button
                 key={`${activeIndex}-${slide.offset}`}
+                ref={isCenter ? centerSlideRef : null}
                 type="button"
                 aria-label={`View ${slide.name}`}
                 aria-current={isCenter}
@@ -196,8 +283,8 @@ export default function FlavorCarousel() {
                     isCenter ? 'flavor-slide-zoom' : ''
                   }`}
                   onError={(e) => {
-                    if (e.currentTarget.src !== IMAGES.wildBerrySwirl) {
-                      e.currentTarget.src = IMAGES.wildBerrySwirl
+                    if (e.currentTarget.src !== vanillaImg) {
+                      e.currentTarget.src = vanillaImg
                     }
                   }}
                 />
@@ -233,6 +320,7 @@ export default function FlavorCarousel() {
           />
         ))}
       </div>
-    </section>
+      </section>
+    </>
   )
 }
