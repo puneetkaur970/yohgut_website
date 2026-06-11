@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import startImg from '../assets/start.png'
-import chooseFlavourImg from '../assets/choose_flavour.png'
-import chooseToppingsImg from '../assets/choose_toppings.png'
-import payImg from '../assets/pay.png'
+import startImg from '../assets/start.webp'
+import chooseFlavourImg from '../assets/choose_flavour.webp'
+import chooseToppingsImg from '../assets/choose_toppings.webp'
+import payImg from '../assets/pay.webp'
 
 const steps = [
   {

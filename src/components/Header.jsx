@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import yohgutLogo from '../assets/yohgut_logo.jpeg'
+import yohgutLogo from '../assets/yohgut_logo.webp'
 
 const navLinks = [
   { label: 'Home', href: '#home', page: 'home' },

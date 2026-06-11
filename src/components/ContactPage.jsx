@@ -1,5 +1,5 @@
 import { CONTACT } from '../constants/contact'
-import contactImage from '../assets/contact.png'
+import contactImage from '../assets/contact.webp'
 
 const MAP_EMBED_URL =
   'https://maps.google.com/maps?q=58+Oshanassy+St,+Sunbury+VIC+3429,+Australia&z=15&output=embed'

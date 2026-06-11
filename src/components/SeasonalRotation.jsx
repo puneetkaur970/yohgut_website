@@ -1,6 +1,6 @@
 import { IMAGES } from '../constants/images'
 import FlavorCarousel from './FlavorCarousel'
-import yummyLeftImage from '../assets/yummy_left.jpg'
+import yummyLeftImage from '../assets/yummy_left.webp'
 
 const FLAVORS = [
   {

@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
-import chocolateImg from '../assets/chocolate.png'
-import acaiImg from '../assets/acai.png'
-import coconutImg from '../assets/coconut.png'
-import mangoImg from '../assets/mango.png'
-import strawberryImg from '../assets/strawberry.png'
-import vanillaImg from '../assets/vanilla.png'
-import classicImg from '../assets/classic.png'
+import chocolateImg from '../assets/chocolate.webp'
+import acaiImg from '../assets/acai.webp'
+import coconutImg from '../assets/coconut.webp'
+import mangoImg from '../assets/mango.webp'
+import strawberryImg from '../assets/strawberry.webp'
+import vanillaImg from '../assets/vanilla.webp'
+import classicImg from '../assets/classic.webp'
 
 const FLAVOR_EMOJIS = {
   'Original Frozen Yoghurt': ['🍦', '✨', '⭐', '🌟'],

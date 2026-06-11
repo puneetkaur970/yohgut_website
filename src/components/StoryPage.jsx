@@ -1,5 +1,5 @@
 import { STORY_IMAGES } from '../constants/images'
-import storyImage from '../assets/story.png'
+import storyImage from '../assets/story.webp'
 
 const values = [
   {

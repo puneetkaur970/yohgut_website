@@ -1,5 +1,5 @@
 import { CONTACT } from '../constants/contact'
-import careersImage from '../assets/careers.png'
+import careersImage from '../assets/careers.webp'
 
 const benefits = [
   {
