@@ -1,8 +1,10 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import startImg from '../assets/start.webp'
 import chooseFlavourImg from '../assets/choose_flavour.webp'
 import chooseToppingsImg from '../assets/choose_toppings.webp'
 import payImg from '../assets/pay.webp'
+
+const stepImages = [startImg, chooseFlavourImg, chooseToppingsImg, payImg]
 
 const steps = [
   {
@@ -43,6 +45,13 @@ export default function YogurtGame() {
   const [currentStep, setCurrentStep] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
+
+  useEffect(() => {
+    stepImages.forEach((src) => {
+      const img = new Image()
+      img.src = src
+    })
+  }, [])
 
   const handleNext = () => {
     if (currentStep < steps.length - 1) {
