@@ -16,7 +16,12 @@ export default function usePage() {
   useEffect(() => {
     const onHashChange = () => {
       setPage(getPageFromHash())
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+      // Use instant scroll for reliability on mobile, then apply smooth scroll
+      // to ensure page is at top even if content is still rendering
+      window.scrollTo(0, 0)
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, behavior: 'instant' })
+      })
     }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
