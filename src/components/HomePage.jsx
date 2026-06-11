@@ -2,7 +2,7 @@ import Hero from './Hero'
 import Promotions from './Promotions'
 import SeasonalRotation from './SeasonalRotation'
 import YogurtGame from './YogurtGame'
-import frozenYohgutVideo from '../assets/Frozen_yohgut_in_cup_202606032218.mp4'
+import heroVideo from '../assets/hero-video.webm'
 
 export default function HomePage() {
   const scrollToFlavors = (e) => {
@@ -23,7 +23,7 @@ export default function HomePage() {
           muted 
           playsInline
         >
-          <source src={frozenYohgutVideo} type="video/mp4" />
+          <source src={heroVideo} type="video/webm" />
           Your browser does not support the video tag.
         </video>
         
