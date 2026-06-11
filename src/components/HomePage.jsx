@@ -3,6 +3,7 @@ import Promotions from './Promotions'
 import SeasonalRotation from './SeasonalRotation'
 import YogurtGame from './YogurtGame'
 import heroVideo from '../assets/hero-video.webm'
+import heroPoster from '../assets/hero-poster.webp'
 
 export default function HomePage() {
   const scrollToFlavors = (e) => {
@@ -22,6 +23,8 @@ export default function HomePage() {
           loop 
           muted 
           playsInline
+          poster={heroPoster}
+          preload="auto"
         >
           <source src={heroVideo} type="video/webm" />
           Your browser does not support the video tag.
