@@ -1,5 +1,6 @@
 import { STORY_IMAGES } from '../constants/images'
 import storyImage from '../assets/story.webp'
+import LoadingImage from './LoadingImage'
 
 const values = [
   {
@@ -28,10 +29,12 @@ const values = [
 function StoryCardImage({ src, alt, scaled }) {
   return (
     <div className="mb-6 aspect-[4/3] overflow-hidden rounded-2xl">
-      <img
+      <LoadingImage
         src={src}
         alt={alt}
         className={`h-full w-full object-cover ${scaled ? 'scale-110' : ''}`}
+        wrapperClassName="h-full w-full"
+        placeholderColor="bg-surface-container"
       />
     </div>
   )
@@ -71,10 +74,12 @@ function StoryHero() {
   return (
     <section className="relative flex min-h-[70vh] items-end overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
+        <LoadingImage
           src={storyImage}
           alt="A child dreaming about YohGut's future"
           className="h-full w-full object-cover object-center"
+          wrapperClassName="h-full w-full"
+          placeholderColor="bg-surface-container-highest"
         />
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
@@ -143,10 +148,12 @@ function FounderSection() {
       <div className="relative w-full md:w-1/2">
         <div className="absolute -inset-4 z-0 rounded-[48px] bg-secondary-fixed/30 blur-2xl" />
         <div className="relative z-10 overflow-hidden rounded-[40px] shadow-2xl">
-          <img
+          <LoadingImage
             src={STORY_IMAGES.founder}
             alt="Founder at YohGut"
             className="h-full w-full object-cover"
+            wrapperClassName="h-full w-full"
+            placeholderColor="bg-surface-container"
           />
         </div>
         <FounderBadge />

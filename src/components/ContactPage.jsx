@@ -1,5 +1,6 @@
 import { CONTACT } from '../constants/contact'
 import contactImage from '../assets/contact.webp'
+import LoadingImage from './LoadingImage'
 
 const MAP_EMBED_URL =
   'https://maps.google.com/maps?q=58+Oshanassy+St,+Sunbury+VIC+3429,+Australia&z=15&output=embed'
@@ -74,10 +75,12 @@ function ContactHero() {
   return (
     <section className="relative flex min-h-[70vh] items-end overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
+        <LoadingImage
           src={contactImage}
           alt="YohGut team member ready to help"
           className="h-full w-full object-cover object-center"
+          wrapperClassName="h-full w-full"
+          placeholderColor="bg-surface-container-highest"
         />
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />

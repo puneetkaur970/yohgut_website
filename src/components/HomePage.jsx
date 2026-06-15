@@ -1,3 +1,4 @@
+import { useState, useRef, useEffect } from 'react'
 import Hero from './Hero'
 import Promotions from './Promotions'
 import SeasonalRotation from './SeasonalRotation'
@@ -6,6 +7,23 @@ import heroVideo from '../assets/hero-video.webm'
 import heroPoster from '../assets/hero-poster.webp'
 
 export default function HomePage() {
+  const [videoReady, setVideoReady] = useState(false)
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) {
+      const handleCanPlay = () => setVideoReady(true)
+      video.addEventListener('canplay', handleCanPlay)
+      
+      if (video.readyState >= 3) {
+        setVideoReady(true)
+      }
+      
+      return () => video.removeEventListener('canplay', handleCanPlay)
+    }
+  }, [])
+
   const scrollToFlavors = (e) => {
     e.preventDefault()
     const flavorSection = document.getElementById('flavor-carousel-heading')
@@ -16,21 +34,26 @@ export default function HomePage() {
 
   return (
     <main id="home" className="mx-auto max-w-[1200px] px-4 pb-12 md:px-16 md:pb-24">
-      <div className="relative -mx-4 md:mx-0">
+      <div className="relative -mx-4 md:mx-0 aspect-video overflow-hidden md:rounded-lg shadow-lg bg-surface-container">
+        <img 
+          src={heroPoster} 
+          alt="" 
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${videoReady ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
+        />
         <video 
-          className="w-full md:rounded-lg shadow-lg"
+          ref={videoRef}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${videoReady ? 'opacity-100' : 'opacity-0'}`}
           autoPlay 
           loop 
           muted 
           playsInline
-          poster={heroPoster}
           preload="auto"
         >
           <source src={heroVideo} type="video/webm" />
           Your browser does not support the video tag.
         </video>
         
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/5 md:rounded-lg">
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/5">
           <h1 className="text-white text-5xl md:text-7xl text-center mb-6 px-4 drop-shadow-2xl" style={{ fontFamily: "'Dancing Script', cursive", fontWeight: 700 }}>
             Gut friendly frozen yogurt
           </h1>

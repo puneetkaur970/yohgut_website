@@ -1,5 +1,6 @@
 import { CONTACT } from '../constants/contact'
 import careersImage from '../assets/careers.webp'
+import LoadingImage from './LoadingImage'
 
 const benefits = [
   {
@@ -69,10 +70,12 @@ function CareersHero() {
   return (
     <section className="relative flex min-h-[70vh] items-end overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <img
+        <LoadingImage
           src={careersImage}
           alt="YohGut team members working together in the store"
           className="h-full w-full object-cover object-center"
+          wrapperClassName="h-full w-full"
+          placeholderColor="bg-surface-container-highest"
         />
         <div className="absolute inset-0 bg-black/30" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
