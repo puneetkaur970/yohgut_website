@@ -229,47 +229,22 @@ export default function ToppingsPage() {
   return (
     <>
       {toppingPortal}
-      <section id="toppings" className="relative overflow-hidden">
-      {/* Decorative Background Elements */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -right-32 -top-32 h-96 w-96 animate-blob rounded-full bg-primary/10 blur-3xl" />
-        <div className="animation-delay-2000 absolute -left-32 top-64 h-96 w-96 animate-blob rounded-full bg-secondary/10 blur-3xl" />
-        <div className="animation-delay-4000 absolute -bottom-32 right-64 h-96 w-96 animate-blob rounded-full bg-tertiary/10 blur-3xl" />
-      </div>
-
-      <div className="relative mx-auto max-w-[1200px] px-4 py-12 md:px-16 md:py-24">
-        {/* Hero Section */}
-        <div
-          className={`mb-16 text-center transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`}
-        >
-          <div className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20 backdrop-blur-sm animate-float">
+      <section id="toppings">
+      <div className="mx-auto max-w-[1200px] px-4 pb-12 pt-16 md:px-16 md:pb-24 md:pt-20">
+        <div className="mb-8 md:mb-10">
+          <h2 className="flex items-center gap-2 text-headline-lg text-on-background">
             <span
-              className="material-symbols-outlined text-6xl text-primary"
+              className="material-symbols-outlined text-secondary"
               style={{ fontVariationSettings: "'FILL' 1" }}
             >
               restaurant
             </span>
-          </div>
-          
-          <h1 className="mb-4 text-display-lg font-bold text-on-background">
             Toppings Bar
-          </h1>
-          
-          <p className="mx-auto max-w-2xl text-headline-sm text-on-surface-variant">
+          </h2>
+          <p className="mt-2 max-w-2xl text-body-md text-on-surface-variant">
             Elevate your swirl with our hand-curated selection of premium toppings,
-            prepared fresh in-house every morning. Each topping is carefully selected
-            to complement our creamy frozen yogurt.
+            prepared fresh in-house every morning.
           </p>
-
-          {/* Decorative Divider */}
-          <div className="mx-auto mt-8 flex items-center justify-center gap-2">
-            <div className="h-1 w-12 rounded-full bg-primary" />
-            <div className="h-1 w-1 rounded-full bg-secondary" />
-            <div className="h-1 w-1 rounded-full bg-tertiary" />
-            <div className="h-1 w-12 rounded-full bg-primary" />
-          </div>
         </div>
 
         {/* Categories Grid */}
@@ -278,7 +253,7 @@ export default function ToppingsPage() {
             ({ title, icon, iconBg, iconColor, cardGradient, dotColor, description, items, sections }, index) => (
               <div
                 key={title}
-                className={`group relative flex h-full flex-col overflow-hidden rounded-[32px] border border-outline-variant/30 bg-white p-8 transition-all duration-700 hover:border-transparent hover:shadow-2xl ${
+                className={`group relative overflow-hidden rounded-[32px] border border-outline-variant/30 bg-white p-8 transition-all duration-700 hover:border-transparent hover:shadow-2xl ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
                 }`}
                 style={{
@@ -291,7 +266,7 @@ export default function ToppingsPage() {
                 />
 
                 {/* Content */}
-                <div className="relative z-10 flex h-full flex-1 flex-col">
+                <div className="relative z-10">
                   {/* Icon */}
                   <div
                     className={`mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${iconBg}`}
@@ -305,12 +280,11 @@ export default function ToppingsPage() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="mb-2 text-headline-lg font-bold text-on-surface transition-colors duration-300 group-hover:text-primary">
+                  <h3 className="mb-2 text-headline-lg text-on-surface transition-colors duration-300 group-hover:text-primary">
                     {title}
                   </h3>
 
-                  {/* Description */}
-                  <p className="mb-6 text-body-sm italic text-on-surface-variant">
+                  <p className="mb-6 text-body-md text-on-surface-variant">
                     {description}
                   </p>
 
@@ -318,9 +292,7 @@ export default function ToppingsPage() {
                   <div className="mb-6 h-px bg-gradient-to-r from-transparent via-outline-variant to-transparent" />
 
                   {/* Items List */}
-                  <ul
-                    className={`flex flex-col gap-3 ${sections ? '' : 'min-h-0 flex-1 justify-between'}`}
-                  >
+                  <ul className="flex flex-col gap-3">
                     {items.map((item, itemIndex) => (
                       <ToppingItem
                         key={item}
