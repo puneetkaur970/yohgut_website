@@ -2,8 +2,8 @@ const OFFERS = [
   {
     id: 'happy-hour',
     title: 'Happy Hour',
-    badge: 'Daily · 3–5 PM',
-    description: 'Enjoy 20% off from 3PM to 5PM every day',
+    badge: 'Daily 3–4 PM',
+    description: 'Enjoy 10% off from 3 PM to 4 PM every day.',
     icon: 'schedule',
     panelClass: 'bg-secondary-fixed',
     iconBg: 'bg-secondary-container/30',
@@ -15,9 +15,8 @@ const OFFERS = [
   {
     id: 'loyalty-program',
     title: 'Loyalty Program',
-    badge: '10 visits = free cup',
-    description:
-      'Earn points with every purchase and get a free cup after 10 visits',
+    badge: 'Coming Soon',
+    description: 'Get 50% off on your 10th cup.',
     icon: 'loyalty',
     panelClass: 'bg-primary-fixed',
     iconBg: 'bg-primary-container/20',

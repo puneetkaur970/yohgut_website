@@ -33,11 +33,11 @@ const steps = [
   },
   {
     id: 3,
-    title: 'Complete Payment',
-    description: 'Quick and easy checkout',
+    title: 'Weigh and Pay',
+    description: 'Weigh your cup, then pay at the counter.',
     image: payImg,
     buttonText: 'Finish',
-    icon: 'payments',
+    icon: 'scale',
   },
 ]
 

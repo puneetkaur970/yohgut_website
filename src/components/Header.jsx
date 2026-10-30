@@ -3,8 +3,8 @@ import yohgutLogo from '../assets/yohgut_logo.webp'
 
 const navLinks = [
   { label: 'Home', href: '#home', page: 'home' },
+  { label: 'Menu', href: '#menu', page: 'menu' },
   { label: 'Story', href: '#story', page: 'story' },
-  { label: 'Toppings', href: '#toppings', page: 'toppings' },
   { label: 'Careers', href: '#careers', page: 'careers' },
   { label: 'Contact', href: '#contact', page: 'contact' },
 ]

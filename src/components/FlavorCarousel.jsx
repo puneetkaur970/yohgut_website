@@ -1,22 +1,46 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-
 import chocolateImg from '../assets/chocolate.webp'
 import acaiImg from '../assets/acai.webp'
 import coconutImg from '../assets/coconut.webp'
 import mangoImg from '../assets/mango.webp'
 import strawberryImg from '../assets/strawberry.webp'
-import vanillaImg from '../assets/vanilla.webp'
 import classicImg from '../assets/classic.webp'
+// Kept for a future Vanilla flavour. Image: src/assets/vanilla.webp
+// import vanillaImg from '../assets/vanilla.webp'
+
+const NEW_LAUNCHES = [
+  { name: 'Cookies and Cream', emoji: '🍪' },
+  { name: 'Butterscotch', emoji: '🍮' },
+  { name: 'Watermelon', emoji: '🍉' },
+]
+
+const MARKERS = {
+  'gluten-free': {
+    label: 'Gluten free',
+    icon: 'verified',
+    className: 'bg-secondary/10 text-secondary',
+  },
+  vegan: {
+    label: 'Vegan',
+    icon: 'spa',
+    className: 'bg-tertiary/10 text-tertiary',
+  },
+  allergens: {
+    label: 'Contains allergens',
+    icon: 'warning',
+    className: 'bg-error-container text-on-error-container',
+  },
+}
 
 const FLAVOR_EMOJIS = {
   'Original Frozen Yoghurt': ['🍦', '✨', '⭐', '🌟'],
   'Mango': ['🥭', '🌴', '☀️', '🧡'],
-  'Strawberry': ['🍓', '🌸', '💕', '❤️'],
-  'Vanilla': ['🍦', '🌼', '⭐', '✨'],
+  'Strawberry Cheesecake': ['🍓', '🍰', '🌸', '💕'],
   'Coconut': ['🥥', '🌴', '🏝️', '🤍'],
-  'Chocolate': ['🍫', '🤎', '🍩', '☕'],
+  'Vegan Chocolate': ['🍫', '🤎', '🍩', '☕'],
   'Acai': ['🫐', '💜', '🍇', '✨'],
+  // 'Vanilla': ['🍦', '🌼', '⭐', '✨'],
 }
 
 const FLAVOR_SLIDES = [
@@ -26,6 +50,7 @@ const FLAVOR_SLIDES = [
     description:
       'Our house classic—creamy, balanced, and the foundation every swirl starts from.',
     image: classicImg,
+    markers: ['gluten-free'],
   },
   {
     name: 'Mango',
@@ -33,20 +58,15 @@ const FLAVOR_SLIDES = [
     description:
       'Sun-ripe mango folded into tart yogurt for a bright, golden spoonful every time.',
     image: mangoImg,
+    markers: ['gluten-free'],
   },
   {
-    name: 'Strawberry',
+    name: 'Strawberry Cheesecake',
     badge: 'Berry Fresh',
     description:
-      'Sweet strawberries blended smooth—light, fruity, and perfect with crunchy toppings.',
+      'Strawberry cheesecake flavour—creamy, fruity, and perfect with crunchy toppings.',
     image: strawberryImg,
-  },
-  {
-    name: 'Vanilla',
-    badge: 'Timeless Classic',
-    description:
-      'Pure Madagascar vanilla swirled into creamy yogurt—silky, subtle, and perfect with any topping.',
-    image: vanillaImg,
+    markers: ['gluten-free'],
   },
   {
     name: 'Coconut',
@@ -54,13 +74,15 @@ const FLAVOR_SLIDES = [
     description:
       'Toasted coconut notes meet cool yogurt for a silky, vacation-worthy scoop.',
     image: coconutImg,
+    markers: ['gluten-free'],
   },
   {
-    name: 'Chocolate',
+    name: 'Vegan Chocolate',
     badge: 'Rich Indulgence',
     description:
-      'Deep cocoa richness balanced with our signature tang—decadent without the heaviness.',
+      'Vegan chocolate with deep cocoa richness and our signature tang—decadent without the heaviness.',
     image: chocolateImg,
+    markers: ['vegan'],
   },
   {
     name: 'Acai',
@@ -68,7 +90,16 @@ const FLAVOR_SLIDES = [
     description:
       'Antioxidant-packed acai with a naturally vibrant finish—bold color, clean finish.',
     image: acaiImg,
+    markers: ['vegan'],
   },
+  // {
+  //   name: 'Vanilla',
+  //   badge: 'Timeless Classic',
+  //   description:
+  //     'Pure Madagascar vanilla swirled into creamy yogurt—silky, subtle, and perfect with any topping.',
+  //   image: vanillaImg,
+  //   markers: ['allergens'],
+  // },
 ]
 
 const SLIDE_COUNT = FLAVOR_SLIDES.length
@@ -93,6 +124,7 @@ export default function FlavorCarousel() {
   const [pendingBurst, setPendingBurst] = useState(null)
   const pointerStartX = useRef(0)
   const isDragging = useRef(false)
+  const pointerSlide = useRef(null)
   const centerSlideRef = useRef(null)
 
   const triggerBurstEffect = useCallback((flavorName, centerX, centerY) => {
@@ -144,6 +176,7 @@ export default function FlavorCarousel() {
     if (e.button !== 0) return
     pointerStartX.current = e.clientX
     isDragging.current = false
+    pointerSlide.current = e.target.closest('[data-slide-offset]')
     e.currentTarget.setPointerCapture(e.pointerId)
   }
 
@@ -154,23 +187,28 @@ export default function FlavorCarousel() {
   }
 
   const handlePointerUp = (e) => {
-    e.currentTarget.releasePointerCapture(e.pointerId)
-    if (!isDragging.current) return
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId)
+    }
+    const slide = pointerSlide.current
+    const dragged = isDragging.current
+    isDragging.current = false
+    pointerSlide.current = null
+
+    if (!dragged && slide) {
+      const offset = Number(slide.dataset.slideOffset)
+      if (offset !== 0) goTo(activeIndex + offset)
+      return
+    }
+
     const diff = pointerStartX.current - e.clientX
     if (diff > SWIPE_THRESHOLD_PX) goNext()
     else if (diff < -SWIPE_THRESHOLD_PX) goPrev()
-    isDragging.current = false
   }
 
   const handlePointerCancel = () => {
     isDragging.current = false
-  }
-
-  const handleSlideClick = (offset) => {
-    if (isDragging.current) return
-    if (offset !== 0) {
-      goTo(activeIndex + offset)
-    }
+    pointerSlide.current = null
   }
 
   const activeSlide = FLAVOR_SLIDES[activeIndex]
@@ -221,6 +259,38 @@ export default function FlavorCarousel() {
         <p className="mt-2 max-w-2xl text-body-md text-on-surface-variant">
           Tap a flavor, use the arrows, or drag to explore our rotating lineup.
         </p>
+        <div className="mt-5 max-w-3xl overflow-hidden rounded-[28px] bg-gradient-to-r from-primary/10 via-secondary/15 to-tertiary/10 px-5 py-4 md:px-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex items-center gap-1 rounded-full bg-primary px-3 py-1 text-label-bold uppercase tracking-wide text-on-primary">
+                <span className="material-symbols-outlined text-base" aria-hidden>
+                  auto_awesome
+                </span>
+                New
+              </span>
+              <p className="text-body-md font-semibold text-on-background">Flavour launches</p>
+            </div>
+            <ul className="flex flex-wrap gap-2">
+              {NEW_LAUNCHES.map(({ name, emoji }) => (
+                <li
+                  key={name}
+                  className="inline-flex items-center gap-2 rounded-full bg-white/80 px-3 py-1.5 text-body-sm font-semibold text-on-background shadow-sm"
+                >
+                  <span
+                    aria-hidden
+                    style={{
+                      fontFamily:
+                        '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", emoji, sans-serif',
+                    }}
+                  >
+                    {emoji}
+                  </span>
+                  {name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
 
       <div className="relative">
@@ -259,9 +329,9 @@ export default function FlavorCarousel() {
                 key={`${activeIndex}-${slide.offset}`}
                 ref={isCenter ? centerSlideRef : null}
                 type="button"
-                aria-label={`View ${slide.name}`}
+                data-slide-offset={slide.offset}
+                aria-label={isCenter ? slide.name : `Focus ${slide.name}`}
                 aria-current={isCenter}
-                onClick={() => handleSlideClick(slide.offset)}
                 style={{
                   transform: `scale(${scale})`,
                   opacity: Math.max(0.3, opacity),
@@ -269,8 +339,8 @@ export default function FlavorCarousel() {
                 }}
                 className={`relative shrink-0 overflow-hidden rounded-2xl transition-all duration-300 ease-out ${
                   isCenter
-                    ? 'h-52 w-40 sm:h-60 sm:w-44 md:h-72 md:w-52'
-                    : 'h-52 w-40 cursor-pointer sm:h-60 sm:w-44 md:h-72 md:w-52'
+                    ? 'h-52 w-40 cursor-default sm:h-60 sm:w-44 md:h-72 md:w-52'
+                    : 'h-52 w-40 cursor-pointer sm:h-60 sm:w-44 md:h-72 md:w-52 hover:opacity-100'
                 }`}
               >
                 <img
@@ -283,8 +353,8 @@ export default function FlavorCarousel() {
                     isCenter ? 'flavor-slide-zoom' : ''
                   }`}
                   onError={(e) => {
-                    if (e.currentTarget.src !== vanillaImg) {
-                      e.currentTarget.src = vanillaImg
+                    if (e.currentTarget.src !== classicImg) {
+                      e.currentTarget.src = classicImg
                     }
                   }}
                 />
@@ -302,6 +372,25 @@ export default function FlavorCarousel() {
         <p className="mx-auto mt-2 max-w-lg text-body-md text-on-surface-variant">
           {activeSlide.description}
         </p>
+        {activeSlide.markers?.length > 0 && (
+          <ul className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            {activeSlide.markers.map((marker) => {
+              const style = MARKERS[marker]
+              if (!style) return null
+              return (
+                <li
+                  key={marker}
+                  className={`inline-flex items-center gap-1 rounded-full px-3 py-1 text-label-bold uppercase tracking-wide ${style.className}`}
+                >
+                  <span className="material-symbols-outlined text-base" aria-hidden>
+                    {style.icon}
+                  </span>
+                  {style.label}
+                </li>
+              )
+            })}
+          </ul>
+        )}
       </div>
 
       <div className="mt-5 flex items-center justify-center gap-2">

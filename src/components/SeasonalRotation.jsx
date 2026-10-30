@@ -1,5 +1,4 @@
 import { IMAGES } from '../constants/images'
-import FlavorCarousel from './FlavorCarousel'
 import yummyLeftImage from '../assets/yummy_left.webp'
 
 const FLAVORS = [
@@ -145,10 +144,6 @@ export default function SeasonalRotation() {
           </div>
         </article>
       </section>
-
-      <div className="mt-12 md:mt-16">
-        <FlavorCarousel />
-      </div>
     </div>
   )
 }

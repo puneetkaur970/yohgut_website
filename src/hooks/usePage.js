@@ -4,7 +4,7 @@ export function getPageFromHash() {
   const hash = window.location.hash.slice(1)
   if (hash === 'story') return 'story'
   if (hash === 'contact') return 'contact'
-  if (hash === 'toppings') return 'toppings'
+  if (hash === 'menu' || hash === 'toppings') return 'menu'
   if (hash === 'careers') return 'careers'
   if (hash === 'home') return 'home'
   return 'home'

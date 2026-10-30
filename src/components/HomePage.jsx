@@ -24,12 +24,8 @@ export default function HomePage() {
     }
   }, [])
 
-  const scrollToFlavors = (e) => {
-    e.preventDefault()
-    const flavorSection = document.getElementById('flavor-carousel-heading')
-    if (flavorSection) {
-      flavorSection.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+  const openMenu = () => {
+    window.location.hash = 'menu'
   }
 
   return (
@@ -58,7 +54,7 @@ export default function HomePage() {
             Gut friendly frozen yogurt
           </h1>
           <button
-            onClick={scrollToFlavors}
+            onClick={openMenu}
             className="bg-primary text-on-primary px-6 py-3 rounded-full text-lg font-semibold hover:bg-primary/90 transition-all duration-300 hover:scale-105 shadow-lg cursor-pointer"
           >
             Explore Flavors
@@ -69,34 +65,32 @@ export default function HomePage() {
       <SeasonalRotation />
       
       <YogurtGame />
-      
-      <section className="my-16 flex flex-col items-center justify-center rounded-[48px] bg-gradient-to-br from-primary/10 via-secondary/10 to-tertiary/10 px-8 py-16 text-center yogurt-shadow md:px-16">
-        <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 backdrop-blur-sm">
+
+      <section className="my-16 flex flex-col items-center rounded-[48px] bg-gradient-to-br from-primary/10 via-secondary/10 to-tertiary/10 px-8 py-14 text-center yogurt-shadow md:px-16">
+        <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10">
           <span
-            className="material-symbols-outlined text-5xl text-primary"
+            className="material-symbols-outlined text-4xl text-primary"
             style={{ fontVariationSettings: "'FILL' 1" }}
+            aria-hidden
           >
-            breakfast_dining
+            restaurant_menu
           </span>
         </div>
-        <h3 className="mb-4 text-headline-lg text-on-background">
-          Toppings Bar
-        </h3>
-        <p className="mb-8 max-w-2xl text-body-lg text-on-surface-variant">
-          Elevate your swirl with our hand-curated selection of premium toppings,
-          prepared fresh in-house every morning. Explore our complete collection!
+        <h2 className="mb-3 text-headline-lg text-on-background">See the full menu</h2>
+        <p className="mb-8 max-w-xl text-body-lg text-on-surface-variant">
+          Browse our flavours and toppings, and build your swirl.
         </p>
         <a
-          href="#toppings"
+          href="#menu"
           className="group relative overflow-hidden rounded-full bg-primary px-8 py-4 text-label-bold text-on-primary shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
         >
           <span className="relative z-10 flex items-center gap-2">
-            Explore All Toppings
+            View menu
             <span className="material-symbols-outlined transition-transform duration-300 group-hover:translate-x-1">
               arrow_forward
             </span>
           </span>
-          <div className="absolute inset-0 bg-gradient-to-r from-secondary to-tertiary opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
+          <span className="absolute inset-0 bg-gradient-to-r from-secondary to-tertiary opacity-0 transition-opacity duration-300 group-hover:opacity-20" />
         </a>
       </section>
 

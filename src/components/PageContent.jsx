@@ -2,7 +2,7 @@ import { useLayoutEffect } from 'react'
 import HomePage from './HomePage'
 import StoryPage from './StoryPage'
 import ContactPage from './ContactPage'
-import ToppingsPage from './ToppingsPage'
+import MenuPage from './MenuPage'
 import CareersPage from './CareersPage'
 
 export default function PageContent({ page }) {
@@ -16,8 +16,8 @@ export default function PageContent({ page }) {
       return <StoryPage />
     case 'contact':
       return <ContactPage />
-    case 'toppings':
-      return <ToppingsPage />
+    case 'menu':
+      return <MenuPage />
     case 'careers':
       return <CareersPage />
     default:

@@ -14,4 +14,8 @@ export const CONTACT = {
     display: 'yohgut58@gmail.com',
     href: 'mailto:yohgut58@gmail.com',
   },
+  instagram: {
+    handle: '@yohgut_sunbury',
+    href: 'https://www.instagram.com/yohgut_sunbury?rpxt=b3Z6YXhpbXlpOWd3&utm_source=qr',
+  },
 }

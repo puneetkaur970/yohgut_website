@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import MenuAvailabilityNote from './MenuAvailabilityNote'
 
 // Emoji mapping for toppings
 const toppingEmojis = {
@@ -21,6 +22,24 @@ const toppingEmojis = {
   'Chocolate wafers': '🍫',
   'Mini oreos': '🍪',
   "M&M's": '🍬',
+  'Dubai Choco crunch': '🍫',
+  'Strawberry Cream Crunch': '🍓',
+  'Cookie Cream Crunch': '🍪',
+  'Peanut Butter Crunch': '🥜',
+  'Raspberry Crumbles': '🍇',
+  'Pistachio Crumbles': '💚',
+  'Strawberry Pearls': '🍓',
+  'Mango Pearls': '🥭',
+  'Lychee Pearls': '🫧',
+  'Mango Mochi': '🥭',
+  'Strawberry Mochi': '🍓',
+  'Matcha Mochi': '🍵',
+  'Mini marshmallows': '🍡',
+  'Biscoff sauce': '🍪',
+  'Nutella sauce': '🍫',
+  'Chocolate sauce': '🍫',
+  'Pistachio sauce': '🥜',
+  'Bueno sauce': '🍫',
 }
 
 const toppingCategories = [
@@ -53,6 +72,21 @@ const toppingCategories = [
     dotColor: 'bg-tertiary',
     description: 'Add that perfect textural contrast',
     items: ['Granola', 'Nuts', 'Biscoff', 'Cheerios', 'Jelly Belly'],
+    sections: [
+      {
+        title: 'Crunch',
+        items: [
+          'Dubai Choco crunch',
+          'Strawberry Cream Crunch',
+          'Cookie Cream Crunch',
+          'Peanut Butter Crunch',
+        ],
+      },
+      {
+        title: 'Crumbles',
+        items: ['Raspberry Crumbles', 'Pistachio Crumbles'],
+      },
+    ],
   },
   {
     title: 'Chocolatey',
@@ -69,14 +103,79 @@ const toppingCategories = [
       "M&M's",
     ],
   },
+  {
+    title: 'Pearls',
+    icon: 'bubble_chart',
+    iconBg: 'bg-gradient-to-br from-secondary/20 to-secondary/5',
+    iconColor: 'text-secondary',
+    cardGradient: 'from-secondary/5 to-transparent',
+    dotColor: 'bg-secondary',
+    description: 'Juicy bursts of fruit in every spoonful',
+    items: ['Strawberry Pearls', 'Mango Pearls', 'Lychee Pearls'],
+  },
+  {
+    title: 'Mochi',
+    icon: 'rice_bowl',
+    iconBg: 'bg-gradient-to-br from-tertiary/20 to-tertiary/5',
+    iconColor: 'text-tertiary',
+    cardGradient: 'from-tertiary/5 to-transparent',
+    dotColor: 'bg-tertiary',
+    description: 'Soft, chewy pieces for a gentle bite',
+    items: ['Mango Mochi', 'Strawberry Mochi', 'Matcha Mochi', 'Mini marshmallows'],
+  },
+  {
+    title: 'Sauces',
+    icon: 'water_drop',
+    iconBg: 'bg-gradient-to-br from-primary/20 to-primary/5',
+    iconColor: 'text-primary',
+    cardGradient: 'from-primary/5 to-transparent',
+    dotColor: 'bg-primary',
+    description: 'Pour over a swirl for an extra layer of flavour',
+    items: [
+      'Biscoff sauce',
+      'Nutella sauce',
+      'Chocolate sauce',
+      'Pistachio sauce',
+      'Bueno sauce',
+    ],
+  },
 ]
+
+function ToppingItem({ item, dotColor, isVisible, delay }) {
+  return (
+    <li
+      className={`group/item flex h-6 items-center gap-3 text-body-md leading-6 text-on-surface-variant transition-all duration-500 hover:translate-x-2 hover:text-on-surface ${
+        isVisible ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
+      }`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      <span
+        className={`h-2 w-2 shrink-0 rounded-full transition-all duration-300 group-hover:scale-150 ${dotColor}`}
+      />
+      <span className="truncate">{item}</span>
+      <span
+        aria-hidden
+        className="inline-flex h-6 w-0 shrink-0 items-center overflow-hidden whitespace-nowrap text-lg leading-none opacity-0 transition-all duration-200 group-hover/item:w-7 group-hover/item:opacity-100"
+        style={{
+          fontFamily:
+            '"Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", emoji, sans-serif',
+        }}
+      >
+        {toppingEmojis[item] || '🍨'}
+      </span>
+    </li>
+  )
+}
 
 export default function ToppingsPage() {
   const [isVisible, setIsVisible] = useState(false)
   const [fallingToppings, setFallingToppings] = useState([])
 
   // Collect all topping items
-  const allToppings = toppingCategories.flatMap(category => category.items)
+  const allToppings = toppingCategories.flatMap((category) => [
+    ...category.items,
+    ...(category.sections?.flatMap((section) => section.items) ?? []),
+  ])
 
   useEffect(() => {
     setIsVisible(true)
@@ -130,7 +229,7 @@ export default function ToppingsPage() {
   return (
     <>
       {toppingPortal}
-      <main className="relative overflow-hidden">
+      <section id="toppings" className="relative overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute -right-32 -top-32 h-96 w-96 animate-blob rounded-full bg-primary/10 blur-3xl" />
@@ -176,10 +275,10 @@ export default function ToppingsPage() {
         {/* Categories Grid */}
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
           {toppingCategories.map(
-            ({ title, icon, iconBg, iconColor, cardGradient, dotColor, description, items }, index) => (
+            ({ title, icon, iconBg, iconColor, cardGradient, dotColor, description, items, sections }, index) => (
               <div
                 key={title}
-                className={`group relative overflow-hidden rounded-[32px] border border-outline-variant/30 bg-white p-8 transition-all duration-700 hover:border-transparent hover:shadow-2xl ${
+                className={`group relative flex h-full flex-col overflow-hidden rounded-[32px] border border-outline-variant/30 bg-white p-8 transition-all duration-700 hover:border-transparent hover:shadow-2xl ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-12 opacity-0'
                 }`}
                 style={{
@@ -192,7 +291,7 @@ export default function ToppingsPage() {
                 />
 
                 {/* Content */}
-                <div className="relative z-10">
+                <div className="relative z-10 flex h-full flex-1 flex-col">
                   {/* Icon */}
                   <div
                     className={`mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl transition-all duration-500 group-hover:scale-110 group-hover:rotate-6 ${iconBg}`}
@@ -219,24 +318,38 @@ export default function ToppingsPage() {
                   <div className="mb-6 h-px bg-gradient-to-r from-transparent via-outline-variant to-transparent" />
 
                   {/* Items List */}
-                  <ul className="space-y-3">
+                  <ul
+                    className={`flex flex-col gap-3 ${sections ? '' : 'min-h-0 flex-1 justify-between'}`}
+                  >
                     {items.map((item, itemIndex) => (
-                      <li
+                      <ToppingItem
                         key={item}
-                        className={`flex items-center gap-3 text-body-md text-on-surface-variant transition-all duration-500 hover:translate-x-2 hover:text-on-surface ${
-                          isVisible ? 'translate-x-0 opacity-100' : '-translate-x-4 opacity-0'
-                        }`}
-                        style={{
-                          transitionDelay: `${index * 150 + itemIndex * 50}ms`,
-                        }}
-                      >
-                        <span
-                          className={`h-2 w-2 shrink-0 rounded-full transition-all duration-300 group-hover:scale-150 ${dotColor}`}
-                        />
-                        <span className="transition-transform duration-300">{item}</span>
-                      </li>
+                        item={item}
+                        dotColor={dotColor}
+                        isVisible={isVisible}
+                        delay={index * 150 + itemIndex * 50}
+                      />
                     ))}
                   </ul>
+
+                  {sections?.map((section, sectionIndex) => (
+                    <div key={section.title} className="mt-6">
+                      <h4 className={`mb-3 text-label-bold uppercase tracking-wide ${iconColor}`}>
+                        {section.title}
+                      </h4>
+                      <ul className="flex flex-col gap-3">
+                        {section.items.map((item, itemIndex) => (
+                          <ToppingItem
+                            key={item}
+                            item={item}
+                            dotColor={dotColor}
+                            isVisible={isVisible}
+                            delay={index * 150 + (items.length + sectionIndex) * 50 + itemIndex * 50}
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
 
                   {/* Hover Accent Line */}
                   <div className={`absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100 ${dotColor}`} />
@@ -245,6 +358,8 @@ export default function ToppingsPage() {
             ),
           )}
         </div>
+
+        <MenuAvailabilityNote className="mx-auto mt-12 max-w-3xl" />
 
         {/* Bottom CTA Section */}
         <div
@@ -271,7 +386,7 @@ export default function ToppingsPage() {
           </a>
         </div>
       </div>
-      </main>
+      </section>
     </>
   )
 }
